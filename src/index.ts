@@ -6,7 +6,7 @@ import { getEmails } from './email'
 require("yargs")
   .usage("$0 <cmd> [args]")
   .command(
-    "slack email [channel]",
+    "slack email [channelName]",
     "fetches slack emails from channel",
     () => {},
     getEmails

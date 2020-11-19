@@ -31,11 +31,16 @@ async function getChannelEmails (channel: Channel) {
   return memberDetails.map(detail => detail.profile.email)
 }
 
-export async function getEmails () {
+
+export async function getEmails ({ channelName }: { channelName: string }) {
   const { channels } = await slackClient.conversations.list() as ConverstaionListMessageResult
-  const output = await Promise.all(channels.map(getChannelEmails))
-  console.log(output)
-  return output
+  const channel = channels.find((channel) => channel.name === channelName)
+  if (!channel) {
+    throw Error('could not find channel name you are looking for')
+  }
+  const emails = await getChannelEmails(channel)
+  console.log(emails)
+  return emails
 }
 
 
